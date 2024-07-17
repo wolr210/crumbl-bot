@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 
-module.exports = async (interaction, pages, time = 30 * 1000) => {
+module.exports = async (interaction, pages, time = 300 * 1000) => {
 
     try {
 
@@ -52,6 +52,8 @@ module.exports = async (interaction, pages, time = 30 * 1000) => {
         });
 
         collector.on('collect', async i => {
+            if(i.user.id !== interaction.user.id) return await i.reply({content: `Only **${interaction.user.username}** can use these buttons!`, ephemeral: true});
+
             await i.deferUpdate();
 
             if(i.customId === 'pagefirst') {

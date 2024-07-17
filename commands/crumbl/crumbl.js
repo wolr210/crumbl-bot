@@ -4,9 +4,9 @@ const cheerio = require('cheerio');
 const pagination = require('../../functions/pagination');
 
 var numCookies = 0;
-const cookieNames = [];
-const cookieDescs = [];
-const cookieImages = [];
+var cookieNames = [];
+var cookieDescs = [];
+var cookieImages = [];
 
 const getCookies = async () => {
     try {
@@ -44,6 +44,10 @@ module.exports = {
     .setName('crumbl')
     .setDescription('Displays the current Crumbl menu'),
     async execute (interaction) {
+        numCookies = 0;
+        cookieNames = [];
+        cookieDescs = [];
+        cookieImages = [];
         await getCookies();
         const embeds = [];
         for(var i = 0; i < numCookies; i++) {
