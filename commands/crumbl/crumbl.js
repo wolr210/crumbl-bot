@@ -25,11 +25,17 @@ const getCookies = async () => {
         // console.log(cookieImages);
         const {data} = await axios.get("https://crumblcookies.com/");
         const $ = cheerio.load(data);
-        $(`[id="weekly-cookie-flavors"]`).find('li').map(function () {
+        // $(`[id="weekly-cookie-flavors"]`).find('li').map(function () { // UPDATE 2024/08/16: crumbl website changed
+        //     numCookies++;
+        //     cookieNames.push($(this).find('h3').text());
+        //     cookieDescs.push($(this).find('p').text());
+        //     cookieImages.push($(this).find('img').attr('src'));
+        // });
+        $(`div[id*=':Cookie']`).map(function () {
             numCookies++;
-            cookieNames.push($(this).find('h3').text());
-            cookieDescs.push($(this).find('p').text());
-            cookieImages.push($(this).find('img').attr('src'));
+            cookieNames.push($(this).find(`p[class*='font-extrabold']`).text());
+            cookieDescs.push($(this).find(`p[class*='font-normal'][class*='on-background']`).text());
+            cookieImages.push($(this).find(`img:not([class*='relative'])`).attr('src'));
         });
         console.log(cookieNames);
         console.log(cookieDescs);
